@@ -1,1 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Blog</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --panel-soft: #1e232d;
+      --border: #2b313d;
+      --text: #e6eaf2;
+      --text-sub: #a9b2c3;
+      --point: #6ea8fe;
+      --point-soft: rgba(110, 168, 254, 0.12);
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+      --radius: 18px;
+      --max-width: 1280px;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: linear-gradient(180deg, #0b0d12 0%, #11141b 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--point);
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      color: var(--text-sub);
+      font-size: 0.95rem;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .profile-card,
+    .intro-card,
+    .post-card {
+      background: rgba(23, 26, 33, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .profile-card {
+      position: sticky;
+      top: 20px;
+      padding: 24px;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2d3748, #0f172a);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--point);
+    }
+
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .profile-role {
+      color: var(--text-sub);
+      font-size: 0.92rem;
+      margin-top: 4px;
+    }
+
+    .profile-desc {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+    }
+
+    .profile-meta {
+      display: grid;
+      gap: 12px;
+    }
+
+    .meta-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--panel-soft);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.92rem;
+      color: var(--text-sub);
+    }
+
+    .meta-item strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    .content {
+      display: grid;
+      gap: 24px;
+    }
+
+    .intro-card {
+      padding: 28px;
+    }
+
+    .intro-label {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--point-soft);
+      color: var(--point);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .intro-title {
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .intro-title span {
+      color: var(--point);
+    }
+
+    .intro-text {
+      color: var(--text-sub);
+      font-size: 1rem;
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+
+    .intro-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border: 1px solid rgba(110, 168, 254, 0.2);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 999px;
+      color: #c8d6f7;
+      font-size: 0.88rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+    }
+
+    .post-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .post-card {
+      padding: 22px 24px;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(110, 168, 254, 0.4);
+      background: rgba(28, 33, 42, 0.98);
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--text-sub);
+      font-size: 0.86rem;
+      margin-bottom: 12px;
+    }
+
+    .category {
+      color: var(--point);
+      font-weight: 700;
+    }
+
+    .post-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .post-summary {
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      font-size: 0.96rem;
+    }
+
+    .post-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .post-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      color: #c5cada;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .read-more {
+      color: var(--point);
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .intro-card,
+      .profile-card,
+      .post-card {
+        padding: 20px;
+      }
+
+      .intro-title {
+        font-size: 2rem;
+      }
+
+      .post-title {
+        font-size: 1.12rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">HongGeun<span>.dev</span></h1>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="#">Posts</a>
+        <a href="#">Projects</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <aside class="profile-card">
+        <div class="profile-top">
+          <div class="avatar">HG</div>
+          <div>
+            <div class="profile-name">이홍근</div>
+            <div class="profile-role">Frontend Developer · Technical Blogger</div>
+          </div>
+        </div>
+
+        <p class="profile-desc">
+          사용자 경험을 중심으로 구조적인 화면을 설계하고, 실제 서비스에서
+          유지보수 가능한 프론트엔드 아키텍처를 고민합니다.
+        </p>
+
+        <div class="profile-meta">
+          <div class="meta-item">
+            <strong>관심 분야</strong>
+            HTML · CSS · JavaScript · React · UI/UX
+          </div>
+          <div class="meta-item">
+            <strong>블로그 방향성</strong>
+            실무 관점의 문제 해결, 코드 구조화, 개발 기록
+          </div>
+          <div class="meta-item">
+            <strong>한 줄 소개</strong>
+            읽기 쉬운 코드와 설득력 있는 화면을 만드는 개발자
+          </div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <section class="intro-card">
+          <div class="intro-label">TECH BLOG MAIN</div>
+          <h2 class="intro-title">
+            코드와 설계를 함께 기록하는<br />
+            <span>개발 블로그</span>
+          </h2>
+          <p class="intro-text">
+            단순히 구현하는 것을 넘어서, 왜 이런 구조를 선택했는지까지 설명하는
+            글을 작성합니다. 프론트엔드 개발 과정에서 마주한 문제 해결 경험,
+            UI 컴포넌트 설계 방식, 프로젝트 회고를 정리합니다.
+          </p>
+
+          <div class="intro-tags">
+            <span class="tag">#Frontend</span>
+            <span class="tag">#ComponentDesign</span>
+            <span class="tag">#JavaScript</span>
+            <span class="tag">#CSSArchitecture</span>
+            <span class="tag">#DevLog</span>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-header">
+            <div>
+              <h3 class="section-title">Latest Posts</h3>
+              <p class="section-desc">구조, 설계, 유지보수성을 중심으로 정리한 글</p>
+            </div>
+          </div>
+
+          <div class="post-list">
+            <article class="post-card">
+              <div class="post-meta">
+                <span class="category">JavaScript</span>
+                <span>·</span>
+                <span>2026.03.17</span>
+                <span>·</span>
+                <span>8 min read</span>
+              </div>
+              <h4 class="post-title">공통 모달 컴포넌트를 설계할 때 고려해야 하는 UI 구조</h4>
+              <p class="post-summary">
+                확인/취소 조합, 배경 클릭 처리, 접근성, 재사용성을 기준으로
+                모달 컴포넌트를 분리하는 방법을 정리했습니다.
+              </p>
+              <div class="post-footer">
+                <div class="post-tags">
+                  <span class="post-tag">Modal</span>
+                  <span class="post-tag">UI Component</span>
+                  <span class="post-tag">Reusable</span>
+                </div>
+                <a href="#" class="read-more">Read Article →</a>
+              </div>
+            </article>
+
+            <article class="post-card">
+              <div class="post-meta">
+                <span class="category">CSS</span>
+                <span>·</span>
+                <span>2026.03.14</span>
+                <span>·</span>
+                <span>6 min read</span>
+              </div>
+              <h4 class="post-title">z-index가 의도대로 동작하지 않을 때 점검해야 할 핵심 포인트</h4>
+              <p class="post-summary">
+                position 속성과 stacking context의 관계를 중심으로, 화면 레이어가
+                꼬이는 대표적인 원인과 해결 흐름을 설명합니다.
+              </p>
+              <div class="post-footer">
+                <div class="post-tags">
+                  <span class="post-tag">z-index</span>
+                  <span class="post-tag">Layout</span>
+                  <span class="post-tag">Debugging</span>
+                </div>
+                <a href="#" class="read-more">Read Article →</a>
+              </div>
+            </article>
+
+            <article class="post-card">
+              <div class="post-meta">
+                <span class="category">Project</span>
+                <span>·</span>
+                <span>2026.03.11</span>
+                <span>·</span>
+                <span>10 min read</span>
+              </div>
+              <h4 class="post-title">강의 플랫폼 프로젝트에서 관리자, 강사, 수강생 화면을 나누는 기준</h4>
+              <p class="post-summary">
+                사용자 역할별 화면을 설계할 때 필요한 메뉴 구조, 기능 분리,
+                공통 레이아웃 전략을 프로젝트 관점에서 정리한 글입니다.
+              </p>
+              <div class="post-footer">
+                <div class="post-tags">
+                  <span class="post-tag">Admin</span>
+                  <span class="post-tag">Dashboard</span>
+                  <span class="post-tag">UX</span>
+                </div>
+                <a href="#" class="read-more">Read Article →</a>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      © 2026 HongGeun.dev — Built with semantic HTML and a developer-focused design tone.
+    </footer>
+  </div>
+</body>
+</html>
